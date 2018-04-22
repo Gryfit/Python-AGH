@@ -1,0 +1,21 @@
+najpierw mamy wektroy zmiennych dla których funkcja daje 1
+potem redukujemy takie które różnią się o 1 bit. w miejsce tego zmiennnego bitu wstawiamy -
+teraz przepisujemy to na wyrarzenie tam gdzie jest kreska ignorujemy tam gdzie jest 1 wpisujemy zmienną tam gdzie 0 negację zmiennej
+między wesze alternatywa ||
+między zmienne koniunkcja &&
+DRUGI ETAP
+usuwamy to co nie potrzebne (?)
+jezeli inne wektory dostarczają ten sam wynik funkcji jak nasz badany to nasz możemy bezpiecznie wywalić
+generujemy wszystkie podzbiory --> maski bitowe / rekurencyjnie
+|&>^/~TF
+
+xor
+dyzjunkcja
+
+szukamy skrócić zapis.
+na przykład szukamy xorów bo są krótsze w zapisie
+>>postać prefixowa - ważne lepsze i wgl REPREZENTOWAĆ DRZEWEM operatory w węzłach w liściach zmienne drzewo binarne <3
+lista list
+
+
+NA 3 maja

@@ -1,0 +1,29 @@
+- Salon :
+    salon.gora : Oświetlenie górne
+    salon.lampa : Lampa nad kanapą
+    salon.tv : Zasilanie telewizora
+- Kuchnia :
+    kuchnia.gora : Oświetlenie górne
+    kuchnia.blat : Oświetlenie blatu
+    kuchnia.stol : Oświetlenie stołu
+    kuchnia.w1 : Wentylator 1
+    kuchnia.w2 : Wentylator 2
+    kuchnia.radio : Zasilanie radia
+    kuchnia.g1 : Gniazdo 1
+    kuchnia.g2 : Gniazdo 2
+- Pokoj1 :
+    pokoj1.gora : Oświetlenie górne
+    pokoj1.stol : Oświetlenie stołu
+    pokoj1.grzejnik : Grzejnik olejowy
+- Pokoj2 :
+    pokoj2.gora : Oświetlenie górne
+    pokoj2.lampa : Lampa w rogu
+    pokoj2.pc : Grzejnik olejowy
+- Pokoj3 :
+    pokoj3.gora : Oświetlenie górne
+    pokoj3.lampa : Lampa na stole
+    pokoj3.lampa2 : Lampa w rogu
+- Pokoj4 :
+    pokoj4.gora : Oświetlenie górne
+    pokoj4.lampa : Lampa w rogu
+    pokoj4.rolety : Rolety

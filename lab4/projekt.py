@@ -1,7 +1,7 @@
 from ruamel import yaml
 from socket import *
 from tkinter import *
-
+import sys
 # Room class stores:
 #     'name'      type: str       name of room
 #     'objects'   type: list      list of devices
@@ -30,8 +30,15 @@ class Room:
     def send(self,msg):
         sock = socket(AF_INET, SOCK_DGRAM)
         sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        sock.sendto(bytes(msg, "utf-8"), (self.UDP_IP, self.UDP_PORT))
-
+        try:
+            sock.sendto(bytes(msg, "utf-8"), (self.UDP_IP, self.UDP_PORT))
+        except IOError as e:
+                global mainframe
+                mainframe.destroy()
+                mainframe = Frame(self.master)
+                mainframe.pack()
+                l = Label(mainframe, text="No internet conection")
+                l.pack()
 # Draws window
     def draw(self):
         global mainframe
@@ -64,15 +71,34 @@ def main():
 # Placeholder awaits user to pick room
     l = Label(mainframe, text="Choose room ;)")
     l.pack()
+#Validation of commandline args
+    if len(sys.argv)!=2:
+        print("There must be exactly one argument")
+        sys.exit(22) #define EINVAL      22  /* Invalid argument */
 # Loads from yaml and parse it
-    with open("conf2.yaml", 'r') as stream:
-        data_loaded = yaml.load(stream, Loader=yaml.Loader)
+    try:
+        with open(sys.argv[1], 'r') as stream:
+            data_loaded = yaml.load(stream, Loader=yaml.Loader)
+    except FileNotFoundError as fnfe:
+        print(fnfe)
+        sys.exit(2)  # ENOENT       2  /* No such file or directory */
+    except yaml.scanner.ScannerError as ScannerError:
+        print("Incorrect syntax in yaml file") # EPERM        1  /* Operation not permitted */
+        sys.exit(1)
+
     List = []
-    for i in range(0,len(data_loaded)):
-        for room_name in data_loaded[i]:
-            List.append(Room(room_name,top))
-            for id in data_loaded[i][room_name]:
-                List[-1].addObject((id,data_loaded[i][room_name][id]))
+
+    try:
+        for i in range(0,len(data_loaded)):
+            for room_name in data_loaded[i]:
+                List.append(Room(room_name,top))
+                for id in data_loaded[i][room_name]:
+                    if data_loaded[i][room_name][id] is None:
+                        raise ValueError("Missing field in yaml file")
+                    List[-1].addObject((id,data_loaded[i][room_name][id]))
+    except ValueError as ve:
+        print(ve)
+        sys.exit(61) # ENODATA     61  /* No data available */
 #adds menu based on list of objects
     menubar = Menu(top)
     for room in List:

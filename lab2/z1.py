@@ -6,7 +6,7 @@ def spr(w):
     st = True
     for z in w:
         if st:
-            if z in VAR: 
+            if z in VAR:
                 st=False
             elif z in ")" + OP:
                 return False
@@ -33,12 +33,15 @@ def bal(w, op):
 def onp(w):
     while w[0] == "(" and w[-1] == ")" and spr(w[1:-1]) :
         w = w[1:-1]
+#    print(w)
     p = bal(w, ">")
     if p >=0:
-        return onp(w[:p]) + onp(w[p+1:])+w[p]
+        return onp(w[:p]) +  onp(w[p+1:]) + w[p]
     p = bal(w, "|&")
     if p >=0:
-        return onp(w[:p]) + onp(w[p+1:])+w[p]
+        return onp(w[:p]) +  onp(w[p+1:]) + w[p]
+    if w[0]=="~":
+        return w[1]+w[0]+w[2:]
     return w
 def var(w):
     return "".join(sorted(set(w) & set(VAR)))
@@ -56,16 +59,18 @@ def value(w,val):
     v = var(w)
     w = mapuj(w,v,val)
     st = []
+    #print(w)
     for z in w:
         if z in "01": st.append(int(z))
         elif z=="|": st.append(Or(st.pop(),st.pop()))
         elif z=="&": st.append(And(st.pop(),st.pop()))
         elif z==">": st.append(Imp(st.pop(),st.pop()))
+        elif z=="~": st.append(int(not st.pop()))
     return st
 def gen(n):
     for i in range(2**n):
         yield bin(i)[2:].rjust(n, "0")
-    
+
 if  __name__ == "__main__" :
     while True:
         w = input(">")

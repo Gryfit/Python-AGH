@@ -205,13 +205,38 @@ sources = {
     '01101001': "0^1^2"
 }
 def shorten(s):
+    if len(s)<=2:
+        return ""
     v = var(s)
     result =s
     r = ""
     lines = gen(len(v))
     for l in lines:
         r += str((value(onp(s), l)))
-    #print(r)
+    print(r)
+    flag = True
+    for e in r:
+        if e == "0":
+            flag = False
+    if flag:
+        return "T"
+    flag = True
+    for e in r:
+        if e == "1":
+            flag = False
+    if flag:
+        return "F"
+    flag = True
+    for i in range(0,len(r)-1):
+        if r[i] == "0":
+            flag = False
+    if flag and r[-1] == "0":
+        variables = "".join(sorted(set(s) & set(VAR)))
+        print(variables)
+        r2 = ""
+        for e in variables:
+            r2 += e +"/"
+        return r2[-1]
     if r in sources:
         result  = sources[r]
         variables = "".join(sorted(set(s) & set(VAR)))
@@ -233,13 +258,14 @@ def check(lista):
         #print(maskuj2(m,lista),  dopelninie(m, lista))
         tmp1 = shorten(maskuj2(m,lista))
         tmp2 = check(dopelninie(m, lista))
-        if(tmp2 != ""):
-            tmp = tmp1 +"|"+tmp2
-        else:
-            tmp = tmp1
-        if min(len(tmp), res_len):
-            res = tmp
-            res_len = len(res)
+        if tmp1 != "":
+            if(tmp2 != ""):
+                tmp = tmp1 +"|"+tmp2
+            else:
+                tmp = tmp1
+            if min(len(tmp), res_len):
+                res = tmp
+                res_len = len(res)
     return res
 
 #---------------------------------------------------------
